@@ -1,7 +1,7 @@
 // 全站可复用的常量
 // ⚠️ 上线前一定要把 SITE_URL 改成你自己的正式域名
 
-export const SITE_URL = 'https://your-domain.com';
+export const SITE_URL = 'https://bbkingblog.qzz.io';
 
 export const SITE_TITLE = '我的博客';
 export const SITE_DESCRIPTION = '记录技术思考与日常折腾。';
