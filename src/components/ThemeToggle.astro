@@ -1,5 +1,6 @@
 ---
 // 暗色模式切换按钮（纯客户端 JS，无框架依赖）
+// 注意：脚本绑定在 BaseLayout.astro 全局完成，避免每个按钮重复绑定导致 toggle 两次抵消
 ---
 
 <button
@@ -40,15 +41,3 @@
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
   </svg>
 </button>
-
-<script is:inline>
-  // 同一个 id 可能出现两次（Header 里桌面端 + 移动端各一个），
-  // querySelectorAll 才能拿到所有；getElementById 只返回第一个
-  document.querySelectorAll('#theme-toggle').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const root = document.documentElement;
-      const isDark = root.classList.toggle('dark');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    });
-  });
-</script>

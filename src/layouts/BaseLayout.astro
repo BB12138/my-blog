@@ -26,5 +26,24 @@ const { title, image, type, publishedTime } = Astro.props;
       <slot />
     </main>
     <Footer />
+
+    <script is:inline>
+      // 暗色模式按钮 click 事件绑定：放这里只执行一次，
+      // 避免 ThemeToggle 在 nav + 移动 div 两处都重复绑定导致 toggle 被抵消
+      function bindThemeToggles() {
+        document.querySelectorAll('#theme-toggle').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const root = document.documentElement;
+            const isDark = root.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+          });
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindThemeToggles);
+      } else {
+        bindThemeToggles();
+      }
+    </script>
   </body>
 </html>
