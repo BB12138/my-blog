@@ -1,0 +1,7 @@
+name = "my-blog"
+compatibility_date = "2025-01-15"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "./dist"
+
+# 仅用于本地预览： wrangler pages dev ./dist
+# Cloudflare Pages 在 Dashboard 里通过 Git 集成自动部署，不需要这里配 deploy 命令

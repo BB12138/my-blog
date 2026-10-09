@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_AUTHOR } from '../consts';
+
+export const prerender = true;
+---
+
+<BaseLayout title="关于" description="关于我">
+  <article class="mx-auto max-w-3xl px-6 py-12">
+    <h1 class="mb-6 text-4xl font-bold tracking-tight">关于</h1>
+
+    <div class="prose prose-neutral max-w-none dark:prose-invert">
+      <p>
+        这里是 <strong>{SITE_AUTHOR}</strong> 的个人网站，主要用来记录技术笔记、项目折腾和偶尔的生活碎片。
+      </p>
+      <p>
+        这个站点用 <a href="https://astro.build/">Astro</a> 搭建，通过
+        <a href="https://pages.cloudflare.com/">Cloudflare Pages</a> 部署，
+        所有静态文件走全球 CDN，零服务器成本。
+      </p>
+      <p>
+        想联系可以通过页脚的邮箱，或者在
+        <a href="/blog/">博客</a> 任意文章下留言。
+      </p>
+    </div>
+  </article>
+</BaseLayout>

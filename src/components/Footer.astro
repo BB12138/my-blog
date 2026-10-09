@@ -1,0 +1,28 @@
+---
+import { SOCIAL_LINKS } from '../consts';
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-16 border-t border-neutral-200/60 py-8 dark:border-neutral-800/60">
+  <div class="mx-auto flex max-w-3xl flex-col gap-4 px-6 text-sm text-neutral-500 sm:flex-row sm:items-center sm:justify-between">
+    <p>
+      © {year} All rights reserved.
+    </p>
+    {SOCIAL_LINKS.length > 0 && (
+      <ul class="flex gap-4">
+        {SOCIAL_LINKS.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              target={href.startsWith('http') ? '_blank' : undefined}
+              rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              class="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</footer>

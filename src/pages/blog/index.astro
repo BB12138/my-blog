@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+export const prerender = true;
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title="博客" description="所有文章">
+  <section class="mx-auto max-w-3xl px-6 py-12">
+    <header class="mb-8">
+      <h1 class="mb-2 text-2xl font-semibold tracking-tight">所有文章</h1>
+      <p class="text-sm text-neutral-500">共 {posts.length} 篇</p>
+    </header>
+
+    {posts.length === 0 ? (
+      <p class="rounded-lg border border-dashed border-neutral-300 p-8 text-center text-sm text-neutral-500 dark:border-neutral-700">
+        还没有文章。
+      </p>
+    ) : (
+      <div>
+        {posts.map((post) => <ArticleCard post={post} />)}
+      </div>
+    )}
+  </section>
+</BaseLayout>

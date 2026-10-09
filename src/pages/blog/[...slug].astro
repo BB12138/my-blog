@@ -1,0 +1,22 @@
+---
+import BlogPost from '../../layouts/BlogPost.astro';
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+export const prerender = true; // 文章详情 build 时预渲染到 HTML，CDN 缓存
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BlogPost post={post}>
+  <Content />
+</BlogPost>

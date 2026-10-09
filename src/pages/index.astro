@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+export const prerender = true;
+
+// 取出非草稿、按发布日期倒序的前 N 篇
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5);
+---
+
+<BaseLayout>
+  <section class="mx-auto max-w-3xl px-6 pt-12 pb-8">
+    <h1 class="mb-3 text-4xl font-bold tracking-tight">{SITE_TITLE}</h1>
+    <p class="text-lg text-neutral-600 dark:text-neutral-400">{SITE_DESCRIPTION}</p>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-6 pb-16">
+    <div class="mb-6 flex items-baseline justify-between">
+      <h2 class="text-2xl font-semibold tracking-tight">最新文章</h2>
+      <a
+        href="/blog/"
+        class="text-sm text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
+      >
+        全部文章 →
+      </a>
+    </div>
+
+    {posts.length === 0 ? (
+      <p class="rounded-lg border border-dashed border-neutral-300 p-8 text-center text-sm text-neutral-500 dark:border-neutral-700">
+        还没有文章。在 <code class="rounded bg-neutral-100 px-1 dark:bg-neutral-800">src/content/blog/</code> 下新建一个 .md 文件开始写吧。
+      </p>
+    ) : (
+      <div>
+        {posts.map((post) => <ArticleCard post={post} />)}
+      </div>
+    )}
+  </section>
+</BaseLayout>

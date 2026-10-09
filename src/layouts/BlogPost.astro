@@ -1,0 +1,61 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, heroImage } = post.data;
+---
+
+<BaseLayout title={title} description={description} type="article" publishedTime={pubDate}>
+  <article class="mx-auto max-w-3xl px-6 py-12">
+    <header class="mb-10">
+      {tags.length > 0 && (
+        <ul class="mb-3 flex flex-wrap gap-2 text-xs text-neutral-500">
+          {tags.map((tag) => (
+            <li class="rounded-full bg-neutral-100 px-2 py-0.5 dark:bg-neutral-800">
+              #{tag}
+            </li>
+          ))}
+        </ul>
+      )}
+      <h1 class="mb-3 text-4xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+        {title}
+      </h1>
+      <p class="mb-4 text-lg text-neutral-600 dark:text-neutral-400">
+        {description}
+      </p>
+      <div class="flex items-center gap-3 text-sm text-neutral-500">
+        <FormattedDate date={pubDate} />
+        {updatedDate && (
+          <span>
+            · 更新于 <FormattedDate date={updatedDate} />
+          </span>
+        )}
+      </div>
+      {heroImage && (
+        <img
+          src={heroImage.src}
+          width={heroImage.width}
+          height={heroImage.height}
+          alt=""
+          class="mt-8 aspect-video w-full rounded-lg object-cover"
+        />
+      )}
+    </header>
+
+    <div class="prose prose-neutral max-w-none dark:prose-invert prose-pre:my-4">
+      <slot />
+    </div>
+
+    <nav class="mt-16 border-t border-neutral-200/60 pt-8 text-sm dark:border-neutral-800/60">
+      <a href="/blog/" class="text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100">
+        ← 返回文章列表
+      </a>
+    </nav>
+  </article>
+</BaseLayout>
